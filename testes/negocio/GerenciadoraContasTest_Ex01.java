@@ -1,7 +1,9 @@
 package negocio;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class GerenciadoraContasTest_Ex01 {
 		int idConta01 = 1;
 		int idConta02 = 2;
 		ContaCorrente conta01 = new ContaCorrente(idConta01, 220, true);
-		ContaCorrente conta02 = new ContaCorrente(idConta02, 10, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, 0, true);
 		
 		//inserindo contas a lista de contas 
 		List<ContaCorrente> contasDoBanco = new ArrayList<>();
@@ -45,6 +47,44 @@ public class GerenciadoraContasTest_Ex01 {
 		gerContas.transfereValor(idConta01,  200, idConta02);
 		
 		/*=================== Verificações ==================*/
-		assertThat(conta02.getSaldo(), is(210.0));
+		assertThat(conta02.getSaldo(), is(200.0));
 	}
+	
+	/**
+	 * Teste de tentativa de transferência de um valor da conta de um cliente para outro quando não existe
+	 * saldo suficiente
+	 * 
+	 * @author Willian Brandão 
+	 * @date   11/04/2021
+	 */
+	
+	@Test
+	public void testTransfereValor_SaldoInsuficiente() {
+		
+		/*===================== Montagem de Cenário ======================*/
+		
+		// criando clientes 
+		int idConta01 = 1;
+		int idConta02 = 2;
+		ContaCorrente conta01 = new ContaCorrente(idConta01, 100, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, 0, true);
+		
+		//inserindo contas a lista de contas
+		List<ContaCorrente> contasDeBanco = new ArrayList<>();
+		contasDeBanco.add(conta01);
+		contasDeBanco.add(conta02);
+		
+		//instaciando o a classe gerenciadora de contas
+		gerContas = new GerenciadoraContas(contasDeBanco);
+		
+		/*==================== Execução =======================*/
+		boolean sucesso = gerContas.transfereValor(idConta01, 200, idConta02);
+		/*================= Verificações =======================*/
+		assertFalse(sucesso);
+		assertThat(conta01.getSaldo(), is(100.0));
+		assertThat(conta02.getSaldo(), is(0.0));
+		
+	}
+
+	 
 }
