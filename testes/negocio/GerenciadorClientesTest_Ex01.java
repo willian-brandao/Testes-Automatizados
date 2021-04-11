@@ -93,7 +93,7 @@ public class GerenciadorClientesTest_Ex01 {
 		//verificações de testes
 		assertThat(clienteRemovido, is(true));
 		assertThat(gerClientes.getClientesDoBanco().size(), is(1));
-		assertNull(gerClientes.pesquisaCliente(2));
+		assertNull(gerClientes.pesquisaCliente(idCliente02));
 		
 				
 	}
