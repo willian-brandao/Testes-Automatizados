@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**Classe de teste criada para garantir o funcionamento das principais operações
@@ -19,16 +21,13 @@ import org.junit.Test;
 
 public class GerenciadorClientesTest_Ex01 {
 	
-	/*Teste de pesquisa de um cliente a partir do seu Id
-	 * 
-	 * @author Willian Brandão 
-	 * @date 10/04/2021
-	 */
+	private GerenciadoraClientes gerClientes;
+	private int idCliente01 = 1;
+	private int idCliente02 = 2;
 	
-	@Test 
-	public void testPesquiseClient() {
-		
-		/* ======================= Montagem do cenário ======================= */
+	@Before
+	public void setUp() {
+/* ======================= Montagem do cenário ======================= */
 		
 		//criando clientes
 		int idCliente01 = 1;
@@ -43,6 +42,27 @@ public class GerenciadorClientesTest_Ex01 {
 		
 		//instaciando a classe gerenciadoraClientes
 		GerenciadoraClientes gerClientes = new GerenciadoraClientes(clientesDoBanco); 
+		
+	
+	}
+	
+	@After
+	public void tearDown() {
+		gerClientes.limpa();
+		
+	}
+	
+	
+	/*Teste de pesquisa de um cliente a partir do seu Id
+	 * 
+	 * @author Willian Brandão 
+	 * @date 10/04/2021
+	 */
+	
+	@Test 
+	public void testPesquiseClient() {
+		
+		
 		
 		/* ================ Execução ================ */
 		//invocando o metodo pesquisa clientes 
@@ -64,26 +84,14 @@ public class GerenciadorClientesTest_Ex01 {
 	@Test
 	public void testRemoveCliente() {
 		
-		/* ======================= Montagem do cenário ======================= */
-		
-		//criando clientes
-		int idCliente01 = 1;
-		int idCliente02 = 2;
-		Cliente cliente01 = new Cliente(idCliente01, "Maria Joana", 27, "maria@gmail.com", 1, true);
-		Cliente cliente02 = new Cliente(idCliente02, "João Bob", 27, "joao@gmail.com", 1, true);
-			
-		//inserindo clientes na lista
-		List<Cliente> clientesDeBanco = new ArrayList<>();
-		clientesDeBanco.add(cliente01);
-		clientesDeBanco.add(cliente02);
-		
-		GerenciadoraClientes gerClientes = new GerenciadoraClientes(clientesDeBanco);
-		
+	
 		/* ================ Execução ================ */
+		
 		//invocando metodo para remover clientes
 		boolean clienteRemovido = gerClientes.removeCliente(idCliente02);
 		
 		/* ================ Verificações ================ */
+		
 		//verificações de testes
 		assertThat(clienteRemovido, is(true));
 		assertThat(gerClientes.getClientesDoBanco().size(), is(idCliente02));
