@@ -33,7 +33,7 @@ public class GerenciadoraContasTest_Ex01 {
 		// criando contas
 		int idConta01 = 1;
 		int idConta02 = 2;
-		ContaCorrente conta01 = new ContaCorrente(idConta01, 220, true);
+		ContaCorrente conta01 = new ContaCorrente(idConta01, 200, true);
 		ContaCorrente conta02 = new ContaCorrente(idConta02, 0, true);
 		
 		//inserindo contas a lista de contas 
@@ -44,10 +44,10 @@ public class GerenciadoraContasTest_Ex01 {
 		gerContas = new GerenciadoraContas(contasDoBanco);
 		
 		/*=================== Execução ==================*/
-		gerContas.transfereValor(idConta01,  200, idConta02);
+		gerContas.transfereValor(idConta01,  100, idConta02);
 		
 		/*=================== Verificações ==================*/
-		assertThat(conta02.getSaldo(), is(200.0));
+		assertThat(conta02.getSaldo(), is(100.0));
 	}
 	
 	/**
@@ -85,6 +85,109 @@ public class GerenciadoraContasTest_Ex01 {
 		assertThat(conta02.getSaldo(), is(200.0));
 		
 	}
-
+	/**
+	 * Teste de tranferência de valor quando a conta de origem possui saldo negativo
+	 * 
+	 * 
+	 * @author Willian Brandão 
+	 * @date   11/04/2021
+	 */
+	
+	
+	public void testTransfereValor_SaldoNegativo() {
+		
+		/*===================== Montagem de Cenário ======================*/
+		
+		// criando clientes 
+		int idConta01 = 1;
+		int idConta02 = 2;
+		ContaCorrente conta01 = new ContaCorrente(idConta01, -100, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, 0, true);
+		
+		//inserindo contas a lista de contas
+		List<ContaCorrente> contasDeBanco = new ArrayList<>();
+		contasDeBanco.add(conta01);
+		contasDeBanco.add(conta02);
+		
+		//instaciando o a classe gerenciadora de contas
+		gerContas = new GerenciadoraContas(contasDeBanco);
+		
+		/*==================== Execução =======================*/
+		boolean sucesso = gerContas.transfereValor(idConta01, 200, idConta02);
+		/*================= Verificações =======================*/
+		assertTrue(sucesso);
+		assertThat(conta01.getSaldo(), is(-300.0));
+		assertThat(conta02.getSaldo(), is(200.0));
+		
+	}
+	
+	/**
+	 * Teste de tranferência de valor quando a conta de origem possui saldo negativo e a conta destino também
+	 * 
+	 * 
+	 * @author Willian Brandão 
+	 * @date   11/04/2021
+	 */
+	
+	public void testTransfereValor_SaldoPositivo() {
+		
+		/*===================== Montagem de Cenário ======================*/
+		
+		// criando clientes 
+		int idConta01 = 1;
+		int idConta02 = 2;
+		ContaCorrente conta01 = new ContaCorrente(idConta01, -100, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, -100, true);
+		
+		//inserindo contas a lista de contas
+		List<ContaCorrente> contasDeBanco = new ArrayList<>();
+		contasDeBanco.add(conta01);
+		contasDeBanco.add(conta02);
+		
+		//instaciando o a classe gerenciadora de contas
+		gerContas = new GerenciadoraContas(contasDeBanco);
+		
+		/*==================== Execução =======================*/
+		boolean sucesso = gerContas.transfereValor(idConta01, 200, idConta02);
+		/*================= Verificações =======================*/
+		assertTrue(sucesso);
+		assertThat(conta01.getSaldo(), is(-300.0));
+		assertThat(conta02.getSaldo(), is(100.0));
+		
+	}
+	/**
+	 * Teste de tranferência de valor nulo 
+	 * 
+	 * 
+	 * @author Willian Brandão 
+	 * @date   11/04/2021
+	 */
+	
+	public void testTransfereValor_SaldoNenhum() {
+		
+		/*===================== Montagem de Cenário ======================*/
+		
+		// criando clientes 
+		int idConta01 = 1;
+		int idConta02 = 2;
+		ContaCorrente conta01 = new ContaCorrente(idConta01, -100, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, -100, true);
+		
+		//inserindo contas a lista de contas
+		List<ContaCorrente> contasDeBanco = new ArrayList<>();
+		contasDeBanco.add(conta01);
+		contasDeBanco.add(conta02);
+		
+		//instaciando o a classe gerenciadora de contas
+		gerContas = new GerenciadoraContas(contasDeBanco);
+		
+		/*==================== Execução =======================*/
+		boolean sucesso = gerContas.transfereValor(idConta01, 0, idConta02);
+		/*================= Verificações =======================*/
+		assertTrue(sucesso);
+		assertThat(conta01.getSaldo(), is(-100));
+		assertThat(conta02.getSaldo(), is(-100));
+		
+	}
 	 
 }
