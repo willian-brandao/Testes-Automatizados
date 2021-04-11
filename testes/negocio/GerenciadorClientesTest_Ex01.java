@@ -2,6 +2,8 @@ package negocio;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
@@ -73,6 +75,29 @@ public class GerenciadorClientesTest_Ex01 {
 		
 	}
 	
+	/*Teste de pesquisa de um cliente que não existe
+	 * 
+	 * @author Willian Brandão 
+	 * @date 10/04/2021
+	 */
+	
+	@Test 
+	public void testPesquiseClienteInexisteClient() {
+		
+		
+		
+		/* ================ Execução ================ */
+		//invocando o metodo pesquisa clientes 
+		Cliente cliente = gerClientes.pesquisaCliente(3);
+		
+		
+		/* ================ Verificações ================ */
+		assertNull(cliente);
+		
+		
+	}
+	
+	
 	/*Teste de remover de um cliente a partir do seu Id
 	 * 
 	 * @author Willian Brandão 
@@ -97,5 +122,133 @@ public class GerenciadorClientesTest_Ex01 {
 		
 				
 	}
+	
+	/**Teste de remover um cliente inexistente 
+	 * 
+	 * @author Willian Brandão 
+	 * @date 10/04/2021
+	 */
+	
+	@Test
+	public void testRemoveClienteInexistente() {
+		
+	
+		/* ================ Execução ================ */
+		
+		//invocando metodo para remover clientes
+		boolean clienteRemovido = gerClientes.removeCliente(3);
+		
+		/* ================ Verificações ================ */
+		
+		//verificações de testes
+		assertThat(clienteRemovido, is(false));
+		assertThat(gerClientes.getClientesDoBanco().size(), is(2));
+		
+		
+				
+	}
+	
+	
+	/**
+	 * Validação da idade de um cliente quando a mesma está no intervalo permitido 
+	 * @author Willian Brandão Ramos
+	 * @throws IdadeNaoPermitidaException
+	 * @date 11/04/2021
+	 */
+	@Test
+	public void testClienteIdadeLimite_01 () throws IdadeNaoPermitidaException {
+		
+		/* ============= Montagem do Cenario ===============*/
+		Cliente cliente = new Cliente(1,"Luiz",65, "luiz@gmail.com", 1, true);
+		
+		/*============= Execução ================*/
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		/*============= Verificação =============*/
+		assertTrue(idadeValida);
+	}
+	
+	/**
+	 * Validação da idade de um cliente quando a mesma está no intervalo permitido 
+	 * @author Willian Brandão Ramos
+	 * @throws IdadeNaoPermitidaException
+	 * @date 11/04/2021
+	 */
+	@Test
+	public void testClienteIdadeLimite_02 () throws IdadeNaoPermitidaException {
+		
+		/* ============= Montagem do Cenario ===============*/
+		Cliente cliente = new Cliente(1,"Luiz",18, "luiz@gmail.com", 1, true);
+		
+		/*============= Execução ================*/
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		/*============= Verificação =============*/
+		assertTrue(idadeValida);
+	}
+	
+	/**
+	 * Validação da idade de um cliente quando a mesma está no intervalo permitido 
+	 * @author Willian Brandão Ramos
+	 * @throws IdadeNaoPermitidaException
+	 * @date 11/04/2021
+	 */
+	@Test
+	public void testClienteIdadeLimite_03 () throws IdadeNaoPermitidaException {
+		
+		/* ============= Montagem do Cenario ===============*/
+		Cliente cliente = new Cliente(1,"Luiz",65, "luiz@gmail.com", 1, true);
+		
+		/*============= Execução ================*/
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		/*============= Verificação =============*/
+		assertTrue(idadeValida);
+	}
+	
+	/**
+	 * Validação da idade de um cliente quando o mesmo está abaixo do intervalo permitido 
+	 * @author Willian Brandão Ramos
+	 * @throws IdadeNaoPermitidaException
+	 * @date 11/04/2021
+	 */
+	@Test
+	public void testClienteIdadeLimite_04 () throws IdadeNaoPermitidaException {
+		
+		/* ============= Montagem do Cenario ===============*/
+		Cliente cliente = new Cliente(1,"Luiz",17, "luiz@gmail.com", 1, true);
+		
+		/*============= Execução ================*/
+		try {
+			gerClientes.validaIdade(cliente.getIdade());
+			fail();
+		}catch (Exception e) {
+		/*============= Verificação =============*/
+			assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+		}
+	}
+	
+	/**
+	 * Validação da idade de um cliente quando o mesmo está abaixo do intervalo permitido 
+	 * @author Willian Brandão Ramos
+	 * @throws IdadeNaoPermitidaException
+	 * @date 11/04/2021
+	 */
+	@Test
+	public void testClienteIdadeLimite_05 () throws IdadeNaoPermitidaException {
+		
+		/* ============= Montagem do Cenario ===============*/
+		Cliente cliente = new Cliente(1,"Luiz",66, "luiz@gmail.com", 1, true);
+		
+		/*============= Execução ================*/
+		try {
+			gerClientes.validaIdade(cliente.getIdade());
+			fail();
+		}catch (Exception e) {
+		/*============= Verificação =============*/
+			assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+		}
+	}
+	
 	
 }
