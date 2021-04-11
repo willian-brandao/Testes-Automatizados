@@ -80,9 +80,9 @@ public class GerenciadoraContasTest_Ex01 {
 		/*==================== Execução =======================*/
 		boolean sucesso = gerContas.transfereValor(idConta01, 200, idConta02);
 		/*================= Verificações =======================*/
-		assertFalse(sucesso);
-		assertThat(conta01.getSaldo(), is(100.0));
-		assertThat(conta02.getSaldo(), is(0.0));
+		assertTrue(sucesso);
+		assertThat(conta01.getSaldo(), is(-100.0));
+		assertThat(conta02.getSaldo(), is(200.0));
 		
 	}
 
