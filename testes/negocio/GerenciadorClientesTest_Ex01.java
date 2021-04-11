@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.Matcher;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,11 +27,9 @@ public class GerenciadorClientesTest_Ex01 {
 	
 	@Before
 	public void setUp() {
-/* ======================= Montagem do cenário ======================= */
+		/* ============== Montagem do cenário ================== */
 		
 		//criando clientes
-		int idCliente01 = 1;
-		int idCliente02 = 2;
 		Cliente cliente01 = new Cliente(idCliente01, "Maria Joana", 27, "maria@gmail.com", 1, true);
 		Cliente cliente02 = new Cliente(idCliente02, "João Bob", 27, "joao@gmail.com", 2, true);
 	
@@ -41,7 +39,7 @@ public class GerenciadorClientesTest_Ex01 {
 		clientesDoBanco.add(cliente02);
 		
 		//instaciando a classe gerenciadoraClientes
-		GerenciadoraClientes gerClientes = new GerenciadoraClientes(clientesDoBanco); 
+		gerClientes = new GerenciadoraClientes(clientesDoBanco); 
 		
 	
 	}
@@ -94,7 +92,7 @@ public class GerenciadorClientesTest_Ex01 {
 		
 		//verificações de testes
 		assertThat(clienteRemovido, is(true));
-		assertThat(gerClientes.getClientesDoBanco().size(), is(idCliente02));
+		assertThat(gerClientes.getClientesDoBanco().size(), is(1));
 		assertNull(gerClientes.pesquisaCliente(2));
 		
 				
