@@ -31,8 +31,10 @@ public class GerenciadorClientesTest_Ex01 {
 		/* ======================= Montagem do cenário ======================= */
 		
 		//criando clientes
-		Cliente cliente01 = new Cliente(1, "Maria Joana", 27, "maria@gmail.com", 1, true);
-		Cliente cliente02 = new Cliente(1, "João Bob", 27, "joao@gmail.com", 2, true);
+		int idCliente01 = 1;
+		int idCliente02 = 2;
+		Cliente cliente01 = new Cliente(idCliente01, "Maria Joana", 27, "maria@gmail.com", 1, true);
+		Cliente cliente02 = new Cliente(idCliente02, "João Bob", 27, "joao@gmail.com", 2, true);
 	
 		//inserindo clientes na lista de clientes 
 		List<Cliente> clientesDoBanco = new ArrayList<>();
@@ -44,11 +46,11 @@ public class GerenciadorClientesTest_Ex01 {
 		
 		/* ================ Execução ================ */
 		//invocando o metodo pesquisa clientes 
-		Cliente cliente = gerClientes.pesquisaCliente(1);
+		Cliente cliente = gerClientes.pesquisaCliente(idCliente01);
 		
 		
 		/* ================ Verificações ================ */
-		assertThat(cliente.getId(), is(1));
+		assertThat(cliente.getId(), is(idCliente01));
 		
 		
 	}
@@ -65,8 +67,10 @@ public class GerenciadorClientesTest_Ex01 {
 		/* ======================= Montagem do cenário ======================= */
 		
 		//criando clientes
-		Cliente cliente01 = new Cliente(1, "Maria Joana", 27, "maria@gmail.com", 1, true);
-		Cliente cliente02 = new Cliente(2, "João Bob", 27, "joao@gmail.com", 2, true);
+		int idCliente01 = 1;
+		int idCliente02 = 2;
+		Cliente cliente01 = new Cliente(idCliente01, "Maria Joana", 27, "maria@gmail.com", 1, true);
+		Cliente cliente02 = new Cliente(idCliente02, "João Bob", 27, "joao@gmail.com", 1, true);
 			
 		//inserindo clientes na lista
 		List<Cliente> clientesDeBanco = new ArrayList<>();
@@ -77,12 +81,12 @@ public class GerenciadorClientesTest_Ex01 {
 		
 		/* ================ Execução ================ */
 		//invocando metodo para remover clientes
-		boolean clienteRemovido = gerClientes.removeCliente(2);
+		boolean clienteRemovido = gerClientes.removeCliente(idCliente02);
 		
 		/* ================ Verificações ================ */
 		//verificações de testes
 		assertThat(clienteRemovido, is(true));
-		assertThat(gerClientes.getClientesDoBanco().size(), is(1));
+		assertThat(gerClientes.getClientesDoBanco().size(), is(idCliente02));
 		assertNull(gerClientes.pesquisaCliente(2));
 		
 				

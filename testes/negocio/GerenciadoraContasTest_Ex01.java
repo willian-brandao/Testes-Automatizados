@@ -29,8 +29,10 @@ public class GerenciadoraContasTest_Ex01 {
 		/*======================== Mensagem do Cenário =====================*/
 		
 		// criando contas
-		ContaCorrente conta01 = new ContaCorrente(1, 220, true);
-		ContaCorrente conta02 = new ContaCorrente(2, 10, true);
+		int idConta01 = 1;
+		int idConta02 = 2;
+		ContaCorrente conta01 = new ContaCorrente(idConta01, 220, true);
+		ContaCorrente conta02 = new ContaCorrente(idConta02, 10, true);
 		
 		//inserindo contas a lista de contas 
 		List<ContaCorrente> contasDoBanco = new ArrayList<>();
@@ -40,9 +42,9 @@ public class GerenciadoraContasTest_Ex01 {
 		gerContas = new GerenciadoraContas(contasDoBanco);
 		
 		/*=================== Execução ==================*/
-		gerContas.transfereValor(1,  200, 2);
+		gerContas.transfereValor(idConta01,  200, idConta02);
 		
 		/*=================== Verificações ==================*/
-		assertThat(conta02.getSaldo(), is(110.0));
+		assertThat(conta02.getSaldo(), is(210.0));
 	}
 }
